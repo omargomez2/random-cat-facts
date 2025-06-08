@@ -14,7 +14,7 @@
             height: 100vh;
             margin: 0;
             padding: 20px;
-            background-image: url('https://placekitten.com/1000/1000');
+            background-image: url('https://picsum.photos/1000/1000');
             background-size: cover;
             background-position: center;
             background-blend-mode: overlay;
