@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Cat Fact</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-image: url('https://placekitten.com/1000/1000');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: center;
+            border: 2px solid #ffb6c1;
+        }
+        
+        h1 {
+            color: #ff6b88;
+            margin-bottom: 20px;
+        }
+        
+        .fact-box {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b88;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .fact-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .fact-length {
+            font-style: italic;
+            color: #888;
+            margin-top: 10px;
+        }
+        
+        .cat-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background-color: #ff6b88;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        
+        .btn:hover {
+            background-color: #ff4d6d;
+            transform: translateY(-2px);
+        }
+        
+        .loading {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cat-icon">🐱</div>
+        <h1>Random Cat Fact</h1>
+        
+        <div class="fact-box">
+            <p class="fact-text" id="catFact">Loading cat fact...</p>
+            <p class="fact-length" id="factLength"></p>
+        </div>
+        
+        <button class="btn" onclick="fetchNewFact()">Get Another Fact</button>
+    </div>
+
+    <script>
+        // Function to fetch and display a cat fact
+        function fetchNewFact() {
+            document.getElementById('catFact').textContent = "Loading cat fact...";
+            document.getElementById('factLength').textContent = "";
+            
+            fetch('https://catfact.ninja/fact')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('catFact').textContent = data.fact;
+                    document.getElementById('factLength').textContent = `Length: ${data.length} characters`;
+                })
+                .catch(error => {
+                    console.error('Error fetching cat fact:', error);
+                    document.getElementById('catFact').textContent = "Oops! Couldn't fetch a cat fact. Please try again later.";
+                    document.getElementById('factLength').textContent = "";
+                });
+        }
+        
+        // Call the function when the page loads
+        window.onload = fetchNewFact;
+    </script>
+</body>
+</html>
